@@ -13,7 +13,7 @@ BACKUP_MINIO_PASSWORD=<minio dashboard user password>
 
 ## Job policy
 
-Job policy file that describes all jobs that should be performed on specified hosts. It uses ssh tunneling configured in `auth` section to connect to host. Example YML (or JSON) file structure:
+Job policy is a file that describes all jobs that should be performed on specified hosts. It uses ssh tunneling configured in `auth` section to connect to remote servers. Example YML (or JSON) file structure:
 
 ```yml
 ---
