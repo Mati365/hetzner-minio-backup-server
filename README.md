@@ -1,6 +1,6 @@
 # hetzner-minio-backup-server
 
-Rock solid all-in-one centralised backup server hosted at Hetzner using Ansible as IaC with tools such as MinIO, NGINX, Podman Quadlet.
+Example of a rock-solid centralised backup server hosted on Fedora CoreOS in the Hetzner Cloud. Uses tools such as MinIO, NGINX, Podman Quadlet and Letsencrypt. 
 
 ## Infra environment variables
 
