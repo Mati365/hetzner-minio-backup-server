@@ -16,7 +16,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
-      "sh -c 'yarn lint'"
+      "sh -c 'npm run lint'"
     ]
   },
   "devDependencies": {
