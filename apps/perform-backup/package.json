@@ -7,9 +7,9 @@
     "clean": "rm -rf ./dist",
     "dev": "rollup --watch --config rollup.config.mjs",
     "build:js": "rollup --config rollup.config.mjs",
-    "build:dockerfile": "podman build --platform linux/amd64 -t perform-backup .",
+    "build:dockerfile": "podman build --platform linux/arm64 -t perform-backup .",
     "build": "npm run build:js && npm run build:dockerfile",
-    "lint": "eslint --max-warnings=0 src/",
+    "lint": "eslint --max-warnings=0 \"**/*.{ts,tsx}\"",
     "check:types": "tsc --noEmit"
   },
   "devDependencies": {

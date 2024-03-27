@@ -3,7 +3,7 @@ env:
   es2021: true
 
 extends:
-  - standard-with-typescript
+  - love
   - prettier
 
 overrides:
@@ -39,12 +39,7 @@ rules:
   import/no-default-export: 2
   import/no-extraneous-dependencies: 0
   import/order:
-    [
-      'error',
-      {
-        'groups': ['builtin', 'external', 'type', 'parent', 'sibling', 'index'],
-      },
-    ]
+    ['error', { 'groups': ['builtin', 'external', 'type', 'parent', 'sibling', 'index'] }]
   'space-before-function-paren': off
   '@typescript-eslint/no-unsafe-argument': off
   '@typescript-eslint/space-before-function-paren': off
@@ -63,10 +58,7 @@ rules:
       },
     ]
   '@typescript-eslint/consistent-type-assertions':
-    [
-      'error',
-      { 'assertionStyle': 'as', 'objectLiteralTypeAssertions': 'allow' },
-    ]
+    ['error', { 'assertionStyle': 'as', 'objectLiteralTypeAssertions': 'allow' }]
   '@typescript-eslint/naming-convention':
     [
       'error',

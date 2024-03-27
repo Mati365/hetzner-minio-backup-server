@@ -1,5 +1,10 @@
 # hetzner-minio-backup-server
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/mati365/hetzner-minio-backup-server?style=flat-square)
+![GitHub issues](https://img.shields.io/github/issues/mati365/hetzner-minio-backup-server?style=flat-square)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+
 Example of a rock-solid centralised backup server hosted on Fedora CoreOS in the Hetzner Cloud. Uses tools such as MinIO, NGINX, Podman Quadlet and Letsencrypt.
 
 ## Infra environment variables

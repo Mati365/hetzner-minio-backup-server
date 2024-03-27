@@ -19,7 +19,7 @@
     ]
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.2.0",
+    "@commitlint/cli": "^19.2.1",
     "@commitlint/config-conventional": "^19.1.0",
     "@commitlint/types": "^19.0.3",
     "@rollup/plugin-commonjs": "^25.0.7",
@@ -27,11 +27,11 @@
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-run": "^3.0.2",
     "@types/chalk": "^2.2.0",
-    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
     "chalk": "^5.3.0",
     "eslint": "^8.57.0",
+    "eslint-config-love": "^43.1.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-config-standard-with-typescript": "^43.0.1",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.1.1",
@@ -44,8 +44,8 @@
     "short-uuid": "^4.2.2",
     "source-map-support": "^0.5.21",
     "ts-node": "^10.9.2",
-    "turbo": "^1.12.5",
-    "type-fest": "^4.10.3",
-    "typescript": "^5.3.3"
+    "turbo": "^1.13.0",
+    "type-fest": "^4.14.0",
+    "typescript": "^5.4.3"
   }
 }
