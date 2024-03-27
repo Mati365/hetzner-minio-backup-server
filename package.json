@@ -9,6 +9,7 @@
   "scripts": {
     "lint": "npx turbo lint --parallel",
     "build": "NODE_ENV=production npx turbo run build --cache-dir=.turbo",
+    "build:js": "NODE_ENV=production npx turbo run build:js --cache-dir=.turbo",
     "dev": "npx turbo dev --parallel",
     "check:types": "npx turbo check:types --parallel",
     "prepare": "husky install"

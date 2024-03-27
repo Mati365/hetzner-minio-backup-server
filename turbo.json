@@ -4,6 +4,11 @@
     "clean": {
       "cache": false
     },
+    "build:js": {
+      "dependsOn": ["^build:js", "clean"],
+      "outputs": ["dist/**"],
+      "cache": false
+    },
     "build": {
       "dependsOn": ["^build", "clean"],
       "outputs": ["dist/**"],
@@ -19,7 +24,5 @@
       "cache": false
     }
   },
-  "globalDependencies": [
-    "tsconfig.json"
-  ]
+  "globalDependencies": ["tsconfig.json"]
 }
