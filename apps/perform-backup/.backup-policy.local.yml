@@ -1,0 +1,48 @@
+---
+hosts:
+  - auth:
+      address: 192.168.1.133
+      username: test
+      privateKey: /home/test/.ssh/id_rsa
+    jobs:
+      test-db-job:
+        kind: pg-dump
+        cron:
+          expression: 0 0 0 * * *
+        retention:
+          maxBackups: 7
+        minio:
+          bucket: backup
+          key: local-db-backup/dump-%{timestamp}.tar.gz
+        database:
+          name: test_db
+          auth:
+            username: test
+            password: '123456'
+
+      test-db-all-job:
+        kind: pg-dump-all
+        cron:
+          expression: 0 0 0 * * *
+        retention:
+          maxBackups: 7
+        minio:
+          bucket: backup
+          key: local-db-all-backup/dump-all-%{timestamp}.tar.gz
+        database:
+          auth:
+            username: test
+            password: '123456'
+
+      test-rsync-job:
+        kind: copy
+        exclude:
+          - node_modules/cat
+        cron:
+          expression: 0 0 0 * * *
+        retention:
+          maxBackups: 7
+        minio:
+          bucket: backup
+          key: local-files-backup/dump-%{timestamp}.tar.gz
+        fileOrDir: /home/test/Pulpit/backup/

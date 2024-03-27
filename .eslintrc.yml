@@ -1,0 +1,88 @@
+env:
+  browser: true
+  es2021: true
+
+extends:
+  - standard-with-typescript
+  - prettier
+
+overrides:
+  - env:
+      node: true
+      es2021: true
+    files:
+      - '.eslintrc.{js,cjs}'
+    parserOptions:
+      sourceType: script
+
+parser: '@typescript-eslint/parser'
+parserOptions:
+  ecmaVersion: 6
+  sourceType: module
+  project: ./tsconfig.json
+
+ignorePatterns:
+  - config/*.js
+  - prettier.config.js
+  - node_modules/
+  - rollup.config.mjs
+  - node_modules
+
+rules:
+  max-len: ['error', 120]
+  quotes: ['error', 'single']
+  multiline-ternary: 0
+  generator-star-spacing: off
+  no-console: ['error', { 'allow': ['warn', 'info', 'error'] }]
+  no-void: ['off']
+  import/no-unresolved: off
+  import/no-default-export: 2
+  import/no-extraneous-dependencies: 0
+  import/order:
+    [
+      'error',
+      {
+        'groups': ['builtin', 'external', 'type', 'parent', 'sibling', 'index'],
+      },
+    ]
+  'space-before-function-paren': off
+  '@typescript-eslint/no-unsafe-argument': off
+  '@typescript-eslint/space-before-function-paren': off
+  '@typescript-eslint/strict-boolean-expressions': off
+  '@typescript-eslint/explicit-function-return-type': off
+  '@typescript-eslint/no-invalid-void-type': off
+  '@typescript-eslint/semi': [2, 'always']
+  '@typescript-eslint/consistent-type-definitions': ['error', 'type']
+  '@typescript-eslint/member-delimiter-style':
+    [
+      'error',
+      {
+        'multiline': { 'delimiter': 'semi', 'requireLast': true },
+        'singleline': { 'delimiter': 'semi', 'requireLast': false },
+        'multilineDetection': 'brackets',
+      },
+    ]
+  '@typescript-eslint/consistent-type-assertions':
+    [
+      'error',
+      { 'assertionStyle': 'as', 'objectLiteralTypeAssertions': 'allow' },
+    ]
+  '@typescript-eslint/naming-convention':
+    [
+      'error',
+      {
+        'selector': 'variable',
+        'modifiers': ['destructured'],
+        'format': null,
+        'custom': { 'regex': '^_$', 'match': false },
+      },
+    ]
+  '@typescript-eslint/no-unused-vars':
+    [
+      'error',
+      {
+        'argsIgnorePattern': '^_$',
+        'varsIgnorePattern': '^_$',
+        'caughtErrorsIgnorePattern': '^_$',
+      },
+    ]

@@ -1,11 +1,11 @@
 # hetzner-minio-backup-server
 
-Example of a rock-solid centralised backup server hosted on Fedora CoreOS in the Hetzner Cloud. Uses tools such as MinIO, NGINX, Podman Quadlet and Letsencrypt. 
+Example of a rock-solid centralised backup server hosted on Fedora CoreOS in the Hetzner Cloud. Uses tools such as MinIO, NGINX, Podman Quadlet and Letsencrypt.
 
 ## Infra environment variables
 
 ```bash
-HCLOUD_KEY=<hetzner api key with read & write permissions> 
+HCLOUD_KEY=<hetzner api key with read & write permissions>
 BACKUP_WEBSITE_DOMAIN=<addres of your site like: example.org>
 BACKUP_MINIO_USERNAME=<minio dashboard user name>
 BACKUP_MINIO_PASSWORD=<minio dashboard user password>

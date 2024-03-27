@@ -1,0 +1,13 @@
+.vscode/
+.vagrant
+logs
+*.log
+pids
+*.pid
+*.seed
+*.pid.lock
+.eslintcache
+.cache/
+dist/
+node_modules/
+.turbo

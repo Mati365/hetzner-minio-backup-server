@@ -1,0 +1,18 @@
+import { format } from './format';
+
+export function formatTimestamp(str: string) {
+  const date = new Date();
+  const timestamp = [
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+    date.getTime(),
+    date.getSeconds(),
+  ]
+    .map(line => line.toString().padStart(2, '0'))
+    .join('');
+
+  return format(str, {
+    timestamp,
+  });
+}
