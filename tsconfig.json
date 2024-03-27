@@ -14,7 +14,8 @@
     "forceConsistentCasingInFileNames": true,
     "noEmitOnError": true,
     "noImplicitAny": true,
-    "allowJs": true
+    "allowJs": true,
+    "skipLibCheck": true
   },
   "include": ["apps/"],
   "exclude": ["node_modules/"]
