@@ -37,4 +37,4 @@ jobs:
         run: npm run check:types
 
       - name: Build files
-        run: npm run build
+        run: npm run build:js

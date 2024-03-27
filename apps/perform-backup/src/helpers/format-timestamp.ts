@@ -6,7 +6,7 @@ export function formatTimestamp(str: string) {
     date.getFullYear(),
     date.getMonth(),
     date.getDate(),
-    date.getTime(),
+    date.getHours(),
     date.getSeconds(),
   ]
     .map(line => line.toString().padStart(2, '0'))
