@@ -11,3 +11,5 @@ pids
 dist/
 node_modules/
 .turbo
+coreos/tmp
+.env

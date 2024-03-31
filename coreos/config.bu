@@ -1,0 +1,76 @@
+variant: fcos
+version: 1.5.0
+passwd:
+  groups:
+    - name: web
+
+  users:
+    - name: admin
+      groups:
+        - wheel
+        - sudo
+        - web
+      ssh_authorized_keys:
+        - SSH_PUB_KEY
+
+    - name: deploy
+      groups:
+        - web
+      ssh_authorized_keys:
+        - SSH_PUB_KEY
+
+storage:
+  directories:
+    - path: /home/deploy/.config
+      mode: 0755
+      user:
+        name: deploy
+      group:
+        name: web
+
+    - path: /home/deploy/.config/systemd
+      mode: 0755
+      user:
+        name: deploy
+      group:
+        name: web
+
+    - path: /home/deploy/.config/systemd/user
+      mode: 0755
+      user:
+        name: deploy
+      group:
+        name: web
+
+    - path: /home/deploy/.config/systemd/user/default.target.wants
+      mode: 0755
+      user:
+        name: deploy
+      group:
+        name: web
+
+  files:
+    - path: /var/lib/systemd/linger/deploy
+      mode: 0644
+
+    - path: /home/deploy/.config/systemd/user/linger-example.service
+      mode: 0644
+      contents:
+        inline: |
+          [Unit]
+          Description=A systemd user unit demo
+          [Service]
+          ExecStart=/usr/bin/sleep infinity
+      user:
+        name: deploy
+      group:
+        name: web
+
+  links:
+    - path: /home/deploy/.config/systemd/user/default.target.wants/linger-example.service
+      user:
+        name: deploy
+      group:
+        name: web
+      target: /home/deploy/.config/systemd/user/linger-example.service
+      hard: false
