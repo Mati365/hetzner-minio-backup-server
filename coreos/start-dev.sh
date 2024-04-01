@@ -11,7 +11,7 @@ STREAM="stable"
 DISK_GB="10"
 
 cd $SCRIPT_DIR
-export $(grep -v '^#' .env | xargs)
+set -a; source .env; set +a
 
 mkdir -p $SCRIPT_DIR/tmp/{config,image}
 rm -rf ./tmp/config/*
@@ -24,12 +24,11 @@ IMAGE_FILE=$(ls $SCRIPT_DIR/tmp/image/*.qcow2 -t | head -n 1)
 IGNITION_COMPILED_CONFIG="$SCRIPT_DIR/tmp/config/config.ign"
 IGNITION_DEVICE_ARG=(--qemu-commandline="-fw_cfg name=opt/com.coreos/config,file=${IGNITION_COMPILED_CONFIG}")
 
-butane \
+sed "s|SSH_PUB_KEY|$SSH_PUB_KEY|" $SCRIPT_DIR/config.bu | butane \
   --pretty \
   --strict \
   --files-dir $SCRIPT_DIR/tmp/config \
-  --output $IGNITION_COMPILED_CONFIG \
-  $SCRIPT_DIR/config.bu
+  --output $IGNITION_COMPILED_CONFIG
 
 chcon --type svirt_home_t $IGNITION_COMPILED_CONFIG
 
