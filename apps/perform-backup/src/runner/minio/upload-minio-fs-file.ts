@@ -1,4 +1,3 @@
-import { createReadStream } from 'node:fs';
 import type * as Minio from 'minio';
 
 type FileUploaderAttrs = {
@@ -13,6 +12,6 @@ type FileUploaderAttrs = {
 export const uploadMinioFsFile =
   ({ minio, filePath }: FileUploaderAttrs) =>
   async () => {
-    await minio.client.putObject(minio.bucket, minio.key, createReadStream(filePath));
+    await minio.client.fPutObject(minio.bucket, minio.key, filePath);
     return minio.key;
   };
