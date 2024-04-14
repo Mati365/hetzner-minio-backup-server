@@ -16,10 +16,15 @@ Environment=MINIO_ROOT_PASSWORD=%%MINIO_ROOT_PASSWORD%%
 Environment=MINIO_ADDRESS=:9000
 Environment=MINIO_CONSOLE_ADDRESS=:9001
 Environment=MINIO_BROWSER_REDIRECT_URL=http://localhost:9001/minio/
+HealthCmd=curl -f http://localhost:9001/minio/index.html || exit 1
+HealthInterval=3s
+HealthStartPeriod=4s
+HealthOnFailure=kill
 LogDriver=journald
 AutoUpdate=registry
 Network=apps.network
 IP=10.89.1.11
+PodmanArgs=--sdnotify=healthy
 
 [Service]
 Restart=on-failure

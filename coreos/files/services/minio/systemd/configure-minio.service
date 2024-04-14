@@ -1,0 +1,15 @@
+[Unit]
+Description=Configure MinIO
+Wants=network-online.target minio.service
+After=minio.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c ' \
+  podman exec minio mc alias set local http://0.0.0.0:9000 %%MINIO_ROOT_USER%% %%MINIO_ROOT_PASSWORD%% && \
+  podman exec minio mc admin policy create local backup-bucket-rw-policy /policies/backup-bucket-rw-policy.json && \
+  podman exec minio mc admin user add local %%BACKUP_BUCKET_ACCESS_KEY%% %%BACKUP_BUCKET_SECRET_KEY%% && \
+  (podman exec minio mc admin policy attach local backup-bucket-rw-policy --user %%BACKUP_BUCKET_ACCESS_KEY%% || true) && \
+  (podman exec minio mc mb local/backup || true) && \
+  podman exec minio mc anonymous set none local/backup \
+'

@@ -29,6 +29,8 @@ IGNITION_DEVICE_ARG=(--qemu-commandline="-fw_cfg name=opt/com.coreos/config,file
 # Replace all envs
 find ./tmp/files/ -type f -print0 | xargs -0 sed -i "s/%%MINIO_ROOT_USER%%/$MINIO_ROOT_USER/g"
 find ./tmp/files/ -type f -print0 | xargs -0 sed -i "s/%%MINIO_ROOT_PASSWORD%%/$MINIO_ROOT_PASSWORD/g"
+find ./tmp/files/ -type f -print0 | xargs -0 sed -i "s/%%BACKUP_BUCKET_ACCESS_KEY%%/$BACKUP_BUCKET_ACCESS_KEY/g"
+find ./tmp/files/ -type f -print0 | xargs -0 sed -i "s/%%BACKUP_BUCKET_SECRET_KEY%%/$BACKUP_BUCKET_SECRET_KEY/g"
 
 # Insert pub key to butane and run it
 sed "s|SSH_PUB_KEY|$SSH_PUB_KEY|" $SCRIPT_DIR/config.bu | butane \

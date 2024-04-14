@@ -167,31 +167,47 @@ storage:
         name: web
 
   trees:
-    - local: containers
+    - local: networks
       path: /home/deploy/.config/containers/systemd
 
   files:
     - path: /var/lib/systemd/linger/deploy
       mode: 0644
 
+    # Caddy
+    - path: /home/deploy/.config/containers/systemd/caddy.container
+      contents:
+        local: services/caddy/quadlet/caddy.container
+
     - path: /var/srv/caddy/Caddyfile
       contents:
-        local: /srv/caddy/Caddyfile
+        local: services/caddy/container/Caddyfile
       mode: 0755
       user:
         name: deploy
       group:
         name: web
+
+    # Minio
+    - path: /home/deploy/.config/containers/systemd/minio.container
+      contents:
+        local: services/minio/quadlet/minio.container
 
     - path: /var/srv/minio/policies/backup-bucket-rw-policy.json
       contents:
-        local: /srv/minio/policies/backup-bucket-rw-policy.json
+        local: services/minio/container/policies/backup-bucket-rw-policy.json
       mode: 0755
       user:
         name: deploy
       group:
         name: web
 
+    - path: /home/deploy/.config/systemd/user/configure-minio.service
+      mode: 0644
+      contents:
+        local: services/minio/systemd/configure-minio.service
+
+    # Other things
     - path: /etc/sysconfig/nftables.conf
       mode: 0600
       overwrite: true
@@ -231,21 +247,8 @@ storage:
           }
 
     - path: /home/deploy/.config/systemd/user/wait-for-dns.service
-      mode: 0644
       contents:
-        inline: |
-          [Unit]
-          Description=Wait for DNS
-          Wants=network-online.target
-          After=network-online.target
-
-          [Service]
-          Type=oneshot
-          ExecStart=/bin/sh -c 'while ! host registry-1.docker.io; do sleep 0.3; done'
-      user:
-        name: deploy
-      group:
-        name: web
+        local: services/wait-for-dns.service
 
   links:
     - path: /home/deploy/.config/systemd/user/default.target.wants/wait-for-dns.service
@@ -254,4 +257,12 @@ storage:
       group:
         name: web
       target: /home/deploy/.config/systemd/user/wait-for-dns.service
+      hard: false
+
+    - path:  /home/deploy/.config/systemd/user/default.target.wants/configure-minio.service
+      user:
+        name: deploy
+      group:
+        name: web
+      target: /home/deploy/.config/systemd/user/configure-minio.service
       hard: false
