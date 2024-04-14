@@ -13,8 +13,10 @@ DISK_GB="10"
 cd $SCRIPT_DIR
 set -a; source .env; set +a
 
-mkdir -p $SCRIPT_DIR/tmp/{config,image}
+mkdir -p $SCRIPT_DIR/tmp/{files,config,image}
 rm -rf ./tmp/config/*
+rm -rf ./tmp/files/*
+cp -r ./files/* ./tmp/files/
 
 if ! [ "$(ls -A $SCRIPT_DIR/tmp/image/*.qcow2)" ]; then
   coreos-installer download -s "$STREAM" -p qemu -f qcow2.xz --decompress -C $SCRIPT_DIR/tmp/image
@@ -27,7 +29,7 @@ IGNITION_DEVICE_ARG=(--qemu-commandline="-fw_cfg name=opt/com.coreos/config,file
 sed "s|SSH_PUB_KEY|$SSH_PUB_KEY|" $SCRIPT_DIR/config.bu | butane \
   --pretty \
   --strict \
-  --files-dir $SCRIPT_DIR/tmp/config \
+  --files-dir $SCRIPT_DIR/tmp/files \
   --output $IGNITION_COMPILED_CONFIG
 
 chcon --type svirt_home_t $IGNITION_COMPILED_CONFIG
@@ -66,3 +68,5 @@ do
 
   sleep 1
 done
+
+ssh -o StrictHostKeyChecking=no deploy@$VM_IP

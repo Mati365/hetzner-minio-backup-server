@@ -67,6 +67,33 @@ systemd:
         [Install]
         WantedBy=sockets.target
 
+    - name: proxy-to-https.socket
+      enabled: true
+      contents: |
+        [Unit]
+        After=selinux-proxy-rules.service
+        PartOf=proxy-to-https.service
+
+        [Socket]
+        ListenStream=443
+
+        [Install]
+        WantedBy=sockets.target
+
+    - name: proxy-to-https.service
+      enabled: true
+      contents: |
+        [Unit]
+        Requires=proxy-to-https.socket
+        After=proxy-to-https.socket
+        DefaultDependencies=no
+
+        [Service]
+        ExecStart=/usr/lib/systemd/systemd-socket-proxyd 0.0.0.0:9001
+
+        [Install]
+        WantedBy=sockets.target
+
 storage:
   directories:
     - path: /home/deploy/.config
@@ -111,9 +138,36 @@ storage:
       group:
         name: web
 
+    - path: /var/srv/caddy/config
+      mode: 0755
+      user:
+        name: deploy
+      group:
+        name: web
+
+    - path: /var/srv/caddy/data
+      mode: 0755
+      user:
+        name: deploy
+      group:
+        name: web
+
+  trees:
+    - local: containers
+      path: /home/deploy/.config/containers/systemd
+
   files:
     - path: /var/lib/systemd/linger/deploy
       mode: 0644
+
+    - path: /var/srv/caddy/Caddyfile
+      contents:
+        local: /srv/caddy/Caddyfile
+      mode: 0755
+      user:
+        name: deploy
+      group:
+        name: web
 
     - path: /etc/sysconfig/nftables.conf
       mode: 0600
@@ -165,30 +219,6 @@ storage:
           [Service]
           Type=oneshot
           ExecStart=/bin/sh -c 'while ! host registry-1.docker.io; do sleep 1; done'
-      user:
-        name: deploy
-      group:
-        name: web
-
-    - path: /home/deploy/.config/containers/systemd/http-hello-world.container
-      contents:
-        inline: |
-          [Unit]
-          Wants=network-online.target wait-for-dns.service
-          After=network-online.target wait-for-dns.service
-
-          [Container]
-          ContainerName=http-hello-world
-          Image=docker.io/strm/helloworld-http:latest
-          PublishPort=9000:80
-
-          [Service]
-          TimeoutStartSec=5
-          Restart=always
-          RestartSec=8
-
-          [Install]
-          WantedBy=default.target
       user:
         name: deploy
       group:

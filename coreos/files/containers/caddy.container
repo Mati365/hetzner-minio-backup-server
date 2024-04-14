@@ -1,0 +1,26 @@
+[Unit]
+Description=Caddy web server
+Wants=network-online.target wait-for-dns.service
+After=network-online.target wait-for-dns.service
+
+[Container]
+Image=docker.io/library/caddy:2
+ContainerName=caddy
+NoNewPrivileges=true
+ReadOnly=true
+PublishPort=9000:80/tcp
+PublishPort=9001:443/tcp
+PublishPort=9001:443/udp
+Volume=/var/srv/caddy/config:/config:z
+Volume=/var/srv/caddy/data:/data:z
+Volume=/var/srv/caddy/Caddyfile:/etc/caddy/Caddyfile:ro,z
+AutoUpdate=registry
+Network=apps.network
+IP=10.89.1.10
+
+[Service]
+Restart=on-failure
+TimeoutStartSec=900
+
+[Install]
+WantedBy=default.target
