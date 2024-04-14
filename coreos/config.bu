@@ -146,7 +146,21 @@ storage:
         name: web
 
     - path: /var/srv/caddy/data
-      mode: 0755
+      mode: 0751
+      user:
+        name: deploy
+      group:
+        name: web
+
+    - path: /var/srv/minio/data
+      mode: 0751
+      user:
+        name: deploy
+      group:
+        name: web
+
+    - path: /var/srv/minio/policies
+      mode: 0751
       user:
         name: deploy
       group:
@@ -163,6 +177,15 @@ storage:
     - path: /var/srv/caddy/Caddyfile
       contents:
         local: /srv/caddy/Caddyfile
+      mode: 0755
+      user:
+        name: deploy
+      group:
+        name: web
+
+    - path: /var/srv/minio/policies/backup-bucket-rw-policy.json
+      contents:
+        local: /srv/minio/policies/backup-bucket-rw-policy.json
       mode: 0755
       user:
         name: deploy
@@ -218,7 +241,7 @@ storage:
 
           [Service]
           Type=oneshot
-          ExecStart=/bin/sh -c 'while ! host registry-1.docker.io; do sleep 1; done'
+          ExecStart=/bin/sh -c 'while ! host registry-1.docker.io; do sleep 0.3; done'
       user:
         name: deploy
       group:

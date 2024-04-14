@@ -26,6 +26,11 @@ IMAGE_FILE=$(ls $SCRIPT_DIR/tmp/image/*.qcow2 -t | head -n 1)
 IGNITION_COMPILED_CONFIG="$SCRIPT_DIR/tmp/config/config.ign"
 IGNITION_DEVICE_ARG=(--qemu-commandline="-fw_cfg name=opt/com.coreos/config,file=${IGNITION_COMPILED_CONFIG}")
 
+# Replace all envs
+find ./tmp/files/ -type f -print0 | xargs -0 sed -i "s/%%MINIO_ROOT_USER%%/$MINIO_ROOT_USER/g"
+find ./tmp/files/ -type f -print0 | xargs -0 sed -i "s/%%MINIO_ROOT_PASSWORD%%/$MINIO_ROOT_PASSWORD/g"
+
+# Insert pub key to butane and run it
 sed "s|SSH_PUB_KEY|$SSH_PUB_KEY|" $SCRIPT_DIR/config.bu | butane \
   --pretty \
   --strict \

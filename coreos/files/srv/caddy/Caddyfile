@@ -1,6 +1,12 @@
 :80 {
 	log
-	handle {
-		reverse_proxy 10.89.1.11:80
+
+	handle_path /minio/static/* {
+    rewrite * /static{uri}
+		reverse_proxy 10.89.1.11:9001
+	}
+
+	handle_path /minio/* {
+		reverse_proxy 10.89.1.11:9001
 	}
 }

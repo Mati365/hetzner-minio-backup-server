@@ -14,6 +14,7 @@ PublishPort=9001:443/udp
 Volume=/var/srv/caddy/config:/config:z
 Volume=/var/srv/caddy/data:/data:z
 Volume=/var/srv/caddy/Caddyfile:/etc/caddy/Caddyfile:ro,z
+LogDriver=journald
 AutoUpdate=registry
 Network=apps.network
 IP=10.89.1.10
